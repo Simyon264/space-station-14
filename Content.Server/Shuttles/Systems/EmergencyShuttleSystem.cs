@@ -473,6 +473,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         }
 
         _commsConsole.UpdateCommsConsoleInterface();
+        RaiseLocalEvent(new EmergencyShuttleDockedEvent(_consoleAccumulator));
     }
 
     private void SetupEmergencyShuttle()
@@ -736,5 +737,15 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
         /// No station grid was found at all, shuttle did not get moved.
         /// </summary>
         GoodLuck,
+    }
+}
+
+public sealed class EmergencyShuttleDockedEvent : EntityEventArgs
+{
+    public float DockTime { get; set; }
+
+    public EmergencyShuttleDockedEvent(float dockTime)
+    {
+        DockTime = dockTime;
     }
 }

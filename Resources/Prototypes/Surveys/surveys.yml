@@ -1,0 +1,32 @@
+﻿- type: survey
+  id: defaultSurvey
+  fields:
+  - !type:SurveyField
+    label: Please take a moment to answer these questions.
+  - !type:SurveyMultipleChoiceField
+    surveyId: roundQuality
+    label: How would you rate the quality of the round?
+    allowMultiple: false
+    required: true
+    options:
+    - Horrible
+    - Bad
+    - Average
+    - Good
+    - Excellent
+  - !type:SurveyMultipleChoiceField
+    surveyId: mapQuality
+    label: How would you rate the quality of the map?
+    required: true
+    allowMultiple: false
+    options:
+    - Bad
+    - Average
+    - Good
+  - !type:SurveyDetailField
+    surveyId: feedback
+    label: Please provide any additional feedback.
+    required: false
+    maxLength: 500
+    multiline: true
+    placeholder: Enter your feedback here.
