@@ -1,7 +1,7 @@
 ﻿using Content.Server.Shuttles.Systems;
-using Content.Server.Survey.Prototypes;
 using Content.Shared.CCVar;
 using Content.Shared.Survey;
+using Content.Shared.Survey.Prototypes;
 using Robust.Shared.Configuration;
 using Serilog;
 
@@ -23,7 +23,6 @@ public sealed partial class SurveyManager : IPostInjectInit, IEntityEventSubscri
 
     public void Initialize()
     {
-        SubscribeConfig();
 
         _entityManager.EventBus.SubscribeEvent<EmergencyShuttleDockedEvent>(EventSource.Local, this, OnEmergencyShuttleDocked);
 
@@ -57,6 +56,8 @@ public sealed partial class SurveyManager : IPostInjectInit, IEntityEventSubscri
 
     public void PostInject()
     {
+        SubscribeConfig(); // workaround for prototypes not existing on init
+
         _sawmill = _logManager.GetSawmill("survey");
     }
 
@@ -67,7 +68,7 @@ public sealed partial class SurveyManager : IPostInjectInit, IEntityEventSubscri
         TriggerSurvey(TimeSpan.FromSeconds(time));
     }
 
-    public void TriggerSurvey(TimeSpan maxTime)
+    public void TriggerSurvey(TimeSpan maxTime, SurveyPrototype? prototype = null)
     {
         if (!_surveyEnabled || _surveyActive)
         {
@@ -76,10 +77,12 @@ public sealed partial class SurveyManager : IPostInjectInit, IEntityEventSubscri
 
         _surveyActive = true;
 
+        var prototypeId = prototype?.ID ?? _surveyPrototype.ID;
+
         var msg = new SurveyStartedMsg()
         {
-            PrototypeId = _surveyPrototype.ID,
-            Duration = maxTime
+            PrototypeId = prototypeId,
+            EndTime = maxTime
         };
         _netManager.ServerSendToAll(msg);
 

@@ -1,0 +1,13 @@
+﻿<Control xmlns="https://spacestation14.io" MinWidth="300" MaxWidth="500">
+    <PanelContainer StyleClasses="AngleRect" />
+    <BoxContainer Margin="4" Orientation="Vertical">
+        <RichTextLabel Name="SurveyTitle" Text="{Loc 'ui-survey-started'}"/>
+
+        <Button Margin="4 4" Name="EnterSurvey" Text="{Loc 'ui-survey-enter'}"></Button>
+        <Button Margin="4 4" Name="DismissSurvey" Text="{Loc 'ui-survey-dismiss'}"></Button>
+        <BoxContainer Orientation="Horizontal">
+            <ProgressBar Margin="4" HorizontalExpand="True" Name="TimeLeftBar" MinValue="0" MaxValue="1" />
+            <Label Name="TimeLeftText" />
+        </BoxContainer>
+    </BoxContainer>
+</Control>

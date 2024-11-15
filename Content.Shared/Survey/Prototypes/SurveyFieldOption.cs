@@ -1,4 +1,4 @@
-﻿namespace Content.Server.Survey.Prototypes;
+﻿namespace Content.Shared.Survey.Prototypes;
 
 public abstract partial class SurveyFieldOption : SurveyField
 {

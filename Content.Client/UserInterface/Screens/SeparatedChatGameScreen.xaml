@@ -23,6 +23,7 @@
             <BoxContainer Name="TopLeftContainer" Orientation="Vertical">
                 <actions:ActionsBar Name="Actions" Access="Protected" />
                 <BoxContainer Name="VoteMenu" Access="Public" Orientation="Vertical"/>
+                <BoxContainer Name="SurveyMenu" Access="Public" Margin="0 10 0 10" Orientation="Vertical"/>
             </BoxContainer>
             <alerts:AlertsUI Name="Alerts" Access="Protected" />
         </LayoutContainer>

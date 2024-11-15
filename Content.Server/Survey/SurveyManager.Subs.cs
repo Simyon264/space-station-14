@@ -1,5 +1,5 @@
-﻿using Content.Server.Survey.Prototypes;
-using Content.Shared.CCVar;
+﻿using Content.Shared.CCVar;
+using Content.Shared.Survey.Prototypes;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;

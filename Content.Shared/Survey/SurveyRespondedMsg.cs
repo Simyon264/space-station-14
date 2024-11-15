@@ -1,5 +1,4 @@
-﻿using Content.Server.Survey;
-using Lidgren.Network;
+﻿using Lidgren.Network;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
@@ -45,7 +44,7 @@ public sealed class SurveyRespondedMsg : NetMessage
             buffer.Write(value.GetType().FullName);
             switch (value)
             {
-                // for simplicity, we only support strings and ints.
+                // for simplicity, we only support strings and ints. There probably wont be survey fields that have MORE than that.
                 case string str:
                     buffer.Write(str);
                     break;

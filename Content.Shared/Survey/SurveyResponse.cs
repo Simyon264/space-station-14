@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.Network;
 
-namespace Content.Server.Survey;
+namespace Content.Shared.Survey;
 
 public sealed class SurveyResponse
 {

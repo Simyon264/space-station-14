@@ -1,4 +1,4 @@
-﻿namespace Content.Server.Survey.Prototypes.Fields;
+﻿namespace Content.Shared.Survey.Prototypes.Fields;
 
 /// <summary>
 /// Provides a text field for a survey.

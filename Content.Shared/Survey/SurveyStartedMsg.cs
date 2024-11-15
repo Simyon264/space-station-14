@@ -9,17 +9,20 @@ public sealed class SurveyStartedMsg : NetMessage
     public override MsgGroups MsgGroup { get; } = MsgGroups.Command;
 
     public string PrototypeId = null!;
-    public TimeSpan Duration;
+    public TimeSpan EndTime;
+    public TimeSpan StartTime;
 
     public override void ReadFromBuffer(NetIncomingMessage buffer, IRobustSerializer serializer)
     {
         PrototypeId = buffer.ReadString();
-        Duration = TimeSpan.FromTicks(buffer.ReadInt64());
+        EndTime = TimeSpan.FromTicks(buffer.ReadInt64());
+        StartTime = TimeSpan.FromTicks(buffer.ReadInt64());
     }
 
     public override void WriteToBuffer(NetOutgoingMessage buffer, IRobustSerializer serializer)
     {
         buffer.Write(PrototypeId);
-        buffer.Write(Duration.Ticks);
+        buffer.Write(EndTime.Ticks);
+        buffer.Write(StartTime.Ticks);
     }
 }
