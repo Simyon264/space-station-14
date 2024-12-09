@@ -19,12 +19,12 @@ public sealed partial class SurveyManager : IPostInjectInit, IEntityEventSubscri
     private SurveyPrototype _surveyPrototype = null!;
 
     private bool _surveyActive;
+    private TimeSpan _surveyEndTime;
     private List<List<SurveyResponse>> _surveyResponses = new();
 
     public void Initialize()
     {
-
-        _entityManager.EventBus.SubscribeEvent<EmergencyShuttleDockedEvent>(EventSource.Local, this, OnEmergencyShuttleDocked);
+        SubscribeConfig();
 
         _netManager.RegisterNetMessage<SurveyStartedMsg>();
         _netManager.RegisterNetMessage<SurveyRespondedMsg>(ReceiveResponse);
@@ -51,13 +51,25 @@ public sealed partial class SurveyManager : IPostInjectInit, IEntityEventSubscri
 
     public void Update()
     {
+        if (!_surveyActive)
+        {
+            return;
+        }
 
+        if (_gameTiming.CurTime >= _surveyEndTime)
+        {
+            _surveyActive = false;
+            _surveyEndTime = TimeSpan.Zero;
+
+            var responses = _surveyResponses[^1];
+            _surveyResponses[^1] = responses;
+
+            Log.Debug("Survey ended with {Responses} responses", responses.Count);
+        }
     }
 
     public void PostInject()
     {
-        SubscribeConfig(); // workaround for prototypes not existing on init
-
         _sawmill = _logManager.GetSawmill("survey");
     }
 
@@ -79,10 +91,16 @@ public sealed partial class SurveyManager : IPostInjectInit, IEntityEventSubscri
 
         var prototypeId = prototype?.ID ?? _surveyPrototype.ID;
 
+        var start = _gameTiming.RealTime;
+        var end = start + maxTime;
+
+        _surveyEndTime = end;
+
         var msg = new SurveyStartedMsg()
         {
             PrototypeId = prototypeId,
-            EndTime = maxTime
+            EndTime = end,
+            StartTime = start,
         };
         _netManager.ServerSendToAll(msg);
 

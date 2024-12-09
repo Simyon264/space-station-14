@@ -3,6 +3,7 @@ using Content.Shared.Survey.Prototypes;
 using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Survey;
 
@@ -13,6 +14,7 @@ public sealed partial class SurveyManager
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly EntityManager _entityManager = default!;
     [Dependency] private readonly IServerNetManager _netManager = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     private void SubscribeConfig()
     {
