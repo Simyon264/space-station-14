@@ -9,7 +9,6 @@ using Robust.Shared.Utility;
 using System.Linq;
 using Content.Shared.Inventory;
 using Content.Shared.Light.Components;
-using Robust.Shared.EntitySerialization.Components;
 
 namespace Content.Client.Toggleable;
 
